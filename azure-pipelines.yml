@@ -13,8 +13,8 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  majorMinorVersion: 1.0
-  semanticVersion: $[counter(variables['majorMinorVersion'], 0)]
+  # majorMinorVersion: 1.0
+  # semanticVersion: $[counter(variables['majorMinorVersion'], 0)]
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
