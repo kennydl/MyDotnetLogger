@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 # name: $(majorMinorVersion).$(semanticVersion) # $(rev:r)
-name: 1.0.$(rev:.r)
+name: 1.0$(rev:.r)
 
 trigger:
 - master
@@ -13,8 +13,8 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  # majorMinorVersion: 1.0
-  # semanticVersion: $[counter(variables['majorMinorVersion'], 0)]
+  majorMinorVersion: 1.0
+  semanticVersion: $[counter(variables['majorMinorVersion'], 0)]
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
