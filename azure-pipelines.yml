@@ -21,40 +21,36 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@0
+  displayName: 'Install NuGet tools'
 
 - task: NuGetCommand@2
+  displayName: 'Restore NuGet and solution'
   inputs:
     restoreSolution: '$(solution)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Build solution'
   inputs:
     command: 'build'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Run Tests'
   inputs:
     command: 'test'
     testRunTitle: 'LoggerTest'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Pack solution'
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Push .nuget package'
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: '/d3882b5e-344d-4c6e-b233-8c06ee14bc16'
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
 
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
