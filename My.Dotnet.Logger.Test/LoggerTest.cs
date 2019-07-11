@@ -21,7 +21,10 @@ namespace My.Dotnet.Logger.Test
         [Test]
         public void Write_To_Console()
         {
-            var logger = _loggerConfiguration.AddConsoleLogger().CreateLogger();
+            var logger = _loggerConfiguration
+                .Enrich.FromLogContext()
+                .AddConsoleLogger()
+                .CreateLogger();
 
             //log
             logger.Information("Successfully created the console logger");
@@ -43,7 +46,10 @@ namespace My.Dotnet.Logger.Test
             var connectionString = configuration?.GetConnectionString("AzureTableStorage");
             var storageAccount = CreateStorageAccountFromConnectionString(connectionString);
 
-            var logger = _loggerConfiguration.AddAzureTableStorageLogger(storageAccount, "test").CreateLogger();
+            var logger = _loggerConfiguration
+                .Enrich.FromLogContext()
+                .AddAzureTableStorageLogger(storageAccount, "test").CreateLogger();
+
             logger.AddProperty("PropertyTwo", "dummyTwo")
                 .Information("Write to storage table with template. PropertyOne = {propertyOne}", "dummyOne");
             logger.AddProperty("PropertyThree", "dummyThree")
