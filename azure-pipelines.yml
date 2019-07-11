@@ -21,33 +21,33 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@0
-  displayName: 'Install NuGet tools.'
+  displayName: 'Install NuGet tools'
 
 - task: NuGetCommand@2
-  displayName: 'Restore NuGet and solution.'
+  displayName: 'Restore NuGet and solution'
   inputs:
     restoreSolution: '$(solution)'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Build solution.'
+  displayName: 'Build solution'
   inputs:
     command: 'build'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Run Tests.'
+  displayName: 'Run Tests'
   inputs:
     command: 'test'
     testRunTitle: 'LoggerTest'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Pack solution.'
+  displayName: 'Pack solution'
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Push .nuget package.'
+  displayName: 'Push .nuget package'
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
