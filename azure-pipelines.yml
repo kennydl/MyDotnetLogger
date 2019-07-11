@@ -21,8 +21,10 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@0
+  displayName: 'Install NuGet tools.'
 
 - task: NuGetCommand@2
+  displayName: 'Restore NuGet and solution.'
   inputs:
     restoreSolution: '$(solution)'
 
@@ -32,7 +34,7 @@ steps:
     command: 'build'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Test Logger.'
+  displayName: 'Run Tests.'
   inputs:
     command: 'test'
     testRunTitle: 'LoggerTest'
