@@ -1,0 +1,22 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>My.Dotnet.Logger</id>
+    <version>$version$</version>
+    <title>My Logger</title>
+    <authors>Kenny Luong</authors>
+    <owners>Kenny Luong</owners>
+    <projectUrl>https://github.com/kennydl/MyDotnetLogger</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Framework for logging</description>
+    <copyright>Copyright 2019</copyright>
+    <tags>My Logger</tags>
+    <dependencies>
+      <dependency id="Microsoft.Data.OData" Version="5.8.4" />
+      <dependency id="Microsoft.Data.Services.Client" Version="5.8.4" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\netstandard2.0\My.Dotnet.Logger.dll" target="lib\netstandard2.0\My.Dotnet.Logger.dll" />
+  </files>
+</package>

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.Dotnet.Logger", "My.Dotnet.Logger\My.Dotnet.Logger.csproj", "{E66F3E53-82C7-4A0E-8A63-DF4D685B3AFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My.Dotnet.Logger.Test", "My.Dotnet.Logger.Test\My.Dotnet.Logger.Test.csproj", "{698C3DBC-D50A-4F50-B2E5-20569965BE3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.Dotnet.Logger.Test", "My.Dotnet.Logger.Test\My.Dotnet.Logger.Test.csproj", "{698C3DBC-D50A-4F50-B2E5-20569965BE3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
