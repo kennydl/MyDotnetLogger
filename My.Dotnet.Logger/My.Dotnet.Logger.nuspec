@@ -1,5 +1,5 @@
-﻿<?xml version="1.0"?>
-<package>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>My.Dotnet.Logger</id>
     <version>$version$</version>
@@ -16,4 +16,7 @@
       <dependency id="Microsoft.Data.Services.Client" Version="5.8.4" />
     </dependencies>
   </metadata>
+  <files>
+    <!--<file src="bin\Release\netstandard2.0\My.Dotnet.Logger.dll" target="lib\netstandard2.0\My.Dotnet.Logger.dll" />-->
+  </files>
 </package>
