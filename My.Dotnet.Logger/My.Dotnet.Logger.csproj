@@ -3,6 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsPackable>true</IsPackable>
+    <Authors>Kenny Luong</Authors>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kennydl/MyDotnetLogger</RepositoryUrl>
+    <RepositoryType />
+    <PackageTags>My Logger</PackageTags>
+    <Description>My Dotnet Logger</Description>
   </PropertyGroup>
 
   <ItemGroup>
