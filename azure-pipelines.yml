@@ -47,10 +47,10 @@ steps:
 #     versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Pack solution'
+  displayName: 'Pack My.Dotnet.Logger'
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.nuspec'
+    packagesToPack: '**/My.Dotnet.Logger/*.csproj'
     versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
