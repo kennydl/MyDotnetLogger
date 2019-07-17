@@ -40,36 +40,22 @@ steps:
     command: 'test'
     testRunTitle: 'LoggerTest'
 
-# - task: DotNetCoreCLI@2
-#   displayName: 'Pack solution'
-#   inputs:
-#     command: 'pack'
-#     packagesToPack: '**/My.Dotnet.Logger/*.csproj'
-#     versioningScheme: 'byBuildNumber'
-
 - task: DotNetCoreCLI@2
   displayName: 'Pack My.Dotnet.Logger'
   inputs:
     command: 'pack'
-    packagesToPack: '**/My.Dotnet.Logger/*.csproj'
     nobuild: true
+    packagesToPack: '**/My.Dotnet.Logger/*.csproj'
     versioningScheme: 'byBuildNumber'
-    buildProperties: 'NuspecFile=$(sourceDirectory)\My.Dotnet.Logger\My.Dotnet.Logger.nuspec'
 
 # - task: DotNetCoreCLI@2
 #   displayName: 'Pack My.Dotnet.Logger'
 #   inputs:
 #     command: 'pack'
 #     packagesToPack: '**/My.Dotnet.Logger/*.csproj'
-#     versioningScheme: 'byBuildNumber'
-
-# - task: DotNetCoreCLI@2
-#   displayName: 'Pack My.Dotnet.Logger'
-#   inputs:
-#     command: 'pack'
-#     packagesToPack: '**/My.Dotnet.Logger/*.nuspec'
 #     nobuild: true
 #     versioningScheme: 'byBuildNumber'
+#     buildProperties: 'NuspecFile=$(sourceDirectory)\My.Dotnet.Logger\My.Dotnet.Logger.nuspec'
 
 - task: DotNetCoreCLI@2
   displayName: 'Push .nuget package'
