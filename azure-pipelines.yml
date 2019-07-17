@@ -51,7 +51,15 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/My.Dotnet.Logger/*.csproj'
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'off'
+    buildProperties: '/p:NuspecFile=**/My.Dotnet.Logger/*.nuspec'
+
+# - task: DotNetCoreCLI@2
+#   displayName: 'Pack My.Dotnet.Logger'
+#   inputs:
+#     command: 'pack'
+#     packagesToPack: '**/My.Dotnet.Logger/*.csproj'
+#     versioningScheme: 'byBuildNumber'
 
 # - task: DotNetCoreCLI@2
 #   displayName: 'Pack My.Dotnet.Logger'
