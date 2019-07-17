@@ -50,7 +50,7 @@ steps:
   displayName: 'Pack My.Dotnet.Logger'
   inputs:
     command: 'pack'
-    packagesToPack: '**/My.Dotnet.Logger'
+    packagesToPack: '**/My.Dotnet.Logger/*'
     nobuild: true
     versioningScheme: 'byBuildNumber'
 
