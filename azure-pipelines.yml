@@ -50,9 +50,17 @@ steps:
   displayName: 'Pack My.Dotnet.Logger'
   inputs:
     command: 'pack'
-    packagesToPack: '**/My.Dotnet.Logger/*.nuspec'
+    packagesToPack: '**/My.Dotnet.Logger/*.csproj **/My.Dotnet.Logger/*.nuspec'
     nobuild: true
     versioningScheme: 'byBuildNumber'
+
+# - task: DotNetCoreCLI@2
+#   displayName: 'Pack My.Dotnet.Logger'
+#   inputs:
+#     command: 'pack'
+#     packagesToPack: '**/My.Dotnet.Logger/*.nuspec'
+#     nobuild: true
+#     versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
   displayName: 'Push .nuget package'
