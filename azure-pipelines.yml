@@ -44,7 +44,6 @@ steps:
   displayName: 'Pack My.Dotnet.Logger'
   inputs:
     command: 'pack'
-    nobuild: true
     packagesToPack: '**/My.Dotnet.Logger/*.csproj'
     versioningScheme: 'byBuildNumber'
 
