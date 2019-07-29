@@ -1,11 +1,11 @@
-using System;
-using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
-using My.Dotnet.Logger;
+using My.Dotnet.Logger.Extensions;
 using My.Dotnet.Logger.SeriLogConfig;
 using NUnit.Framework;
 using Serilog;
+using System;
+using System.IO;
 
 namespace My.Dotnet.Logger.Test
 {

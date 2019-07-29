@@ -9,7 +9,7 @@ using My.Dotnet.Logger.Enricher;
 using My.Dotnet.Logger.KeyGenerator;
 using Serilog.Context;
 
-namespace My.Dotnet.Logger
+namespace My.Dotnet.Logger.Extensions
 {
     public static class SeriLogExtensions
     {
