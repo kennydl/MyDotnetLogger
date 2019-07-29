@@ -24,7 +24,7 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: 'Install NuGet tools'
   inputs:
-    version: '2.2.6'
+    version: '2.2.5'
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore NuGet'
