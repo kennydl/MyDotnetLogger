@@ -34,11 +34,16 @@ steps:
 #   inputs:
 #     command: 'build'
 
+- task: DotNetCoreCLI@2
+  displayName: 'Restore NuGet'
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+
 - task: VSBuild@1
   inputs:
     solution: '**\*.sln'
     clean: true
-    restoreNugetPackages: true
     msbuildArchitecture: 'x64'
 
 - task: DotNetCoreCLI@2
