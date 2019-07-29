@@ -24,20 +24,22 @@ steps:
 - task: NuGetToolInstaller@0
   displayName: 'Install NuGet tools'
 
-- task: NuGetCommand@2
-  displayName: 'Restore NuGet and solution'
-  inputs:
-    restoreSolution: '$(solution)'
-
-- task: VSBuild@1
-  displayName: 'Build solution'
-  inputs:
-    solution: '**\*.sln'
+# - task: NuGetCommand@2
+#   displayName: 'Restore NuGet and solution'
+#   inputs:
+#     restoreSolution: '$(solution)'
 
 # - task: DotNetCoreCLI@2
 #   displayName: 'Build solution'
 #   inputs:
 #     command: 'build'
+
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
+    clean: true
+    restoreNugetPackages: true
+    msbuildArchitecture: 'x64'
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Tests'
