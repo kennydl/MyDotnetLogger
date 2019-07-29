@@ -21,18 +21,10 @@ variables:
   sourceDirectory: $(Build.SourcesDirectory)
 
 steps:
-- task: NuGetToolInstaller@0
+- task: DotNetCoreInstaller@0
   displayName: 'Install NuGet tools'
-
-# - task: NuGetCommand@2
-#   displayName: 'Restore NuGet and solution'
-#   inputs:
-#     restoreSolution: '$(solution)'
-
-# - task: DotNetCoreCLI@2
-#   displayName: 'Build solution'
-#   inputs:
-#     command: 'build'
+  inputs:
+    version: '2.2'
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore NuGet'
@@ -40,35 +32,38 @@ steps:
     command: 'restore'
     feedsToUse: 'select'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   displayName: 'Build solution'
   inputs:
-    solution: '**\*.sln'
-    clean: true
-    msbuildArchitecture: 'x64'
+    command: 'build'
 
-# - task: DotNetCoreCLI@2
-#   displayName: 'Run Tests'
+- task: DotNetCoreCLI@2
+  displayName: 'Run Tests'
+  inputs:
+    command: 'test'
+    testRunTitle: 'LoggerTest'
+
+# - task: NuGetCommand@2
+#   displayName: 'Restore NuGet and solution'
 #   inputs:
-#     command: 'test'
-#     testRunTitle: 'LoggerTest'
+#     restoreSolution: '$(solution)'
+
+# - task: VSBuild@1
+#   displayName: 'Build solution'
+#   inputs:
+#     solution: '**\*.sln'
+#     clean: true
+#     msbuildArchitecture: 'x64'
 
 # - task: VSTest@2
 #   displayName: 'Run Tests'
 #   inputs:
-#     testSelector: 'testRun'
+#     testSelector: 'testAssemblies'
+#     testAssemblyVer2: |
+#       **\*test*.dll
+#       !**\*TestAdapter.dll
+#       !**\obj\**
 #     searchFolder: '$(System.DefaultWorkingDirectory)'
-#     testRunTitle: 'My.Dotnet.Logger - tests'
-
-- task: VSTest@2
-  displayName: 'Run Tests'
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*test*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Pack My.Dotnet.Logger'
@@ -76,15 +71,6 @@ steps:
     command: 'pack'
     packagesToPack: '**/My.Dotnet.Logger/*.csproj'
     versioningScheme: 'byBuildNumber'
-
-# - task: DotNetCoreCLI@2
-#   displayName: 'Pack My.Dotnet.Logger'
-#   inputs:
-#     command: 'pack'
-#     packagesToPack: '**/My.Dotnet.Logger/*.csproj'
-#     nobuild: true
-#     versioningScheme: 'byBuildNumber'
-#     buildProperties: 'NuspecFile=$(sourceDirectory)\My.Dotnet.Logger\My.Dotnet.Logger.nuspec'
 
 - task: DotNetCoreCLI@2
   displayName: 'Push .nuget package to BackendFeed'
