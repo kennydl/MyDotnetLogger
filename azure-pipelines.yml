@@ -24,7 +24,7 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: 'Install NuGet tools'
   inputs:
-    version: '2.2.301'
+    version: '2.2.401'
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore NuGet'
@@ -42,28 +42,6 @@ steps:
   inputs:
     command: 'test'
     testRunTitle: 'LoggerTest'
-
-# - task: NuGetCommand@2
-#   displayName: 'Restore NuGet and solution'
-#   inputs:
-#     restoreSolution: '$(solution)'
-
-# - task: VSBuild@1
-#   displayName: 'Build solution'
-#   inputs:
-#     solution: '**\*.sln'
-#     clean: true
-#     msbuildArchitecture: 'x64'
-
-# - task: VSTest@2
-#   displayName: 'Run Tests'
-#   inputs:
-#     testSelector: 'testAssemblies'
-#     testAssemblyVer2: |
-#       **\*test*.dll
-#       !**\*TestAdapter.dll
-#       !**\obj\**
-#     searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Pack My.Dotnet.Logger'
