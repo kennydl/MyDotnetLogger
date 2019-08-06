@@ -15,12 +15,12 @@ namespace My.Dotnet.Logger.KeyGenerator
 
         public virtual string GeneratePartitionKey(LogEvent logEvent)
         {
-            return DateTime.Now.ToString("yyyy-MM");
+            return DateTime.Now.ToString("yyyy-MM-dd");
         }
 
         public virtual string GenerateRowKey(LogEvent logEvent, string suffix = null)
         {
-            return DateTime.Now.ToString("dd HH:mm:ss.ffff");
+            return DateTime.Now.ToString("HH:mm:ss.ffff");
         }
     }
 }
