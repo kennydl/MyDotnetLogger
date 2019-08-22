@@ -37,6 +37,11 @@ steps:
   inputs:
     command: 'build'
 
+- task: FileTransform@1
+  inputs:
+    folderPath: '$(Build.ArtifactStagingDirectory)/*.zip'
+    fileType: 'json'
+
 - task: DotNetCoreCLI@2
   displayName: 'Run Tests'
   inputs:
