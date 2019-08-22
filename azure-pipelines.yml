@@ -57,6 +57,20 @@ steps:
     versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Pack My.Dotnet.Logger'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/My.Dotnet.Logger.Data/*.csproj'
+    versioningScheme: 'byBuildNumber'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack My.Dotnet.Logger'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/My.Dotnet.Logger.TableStorage/*.csproj'
+    versioningScheme: 'byBuildNumber'
+
+- task: DotNetCoreCLI@2
   displayName: 'Push .nuget package to BackendFeed'
   inputs:
     command: 'push'
