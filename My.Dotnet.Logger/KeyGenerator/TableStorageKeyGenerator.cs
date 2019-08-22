@@ -1,4 +1,5 @@
 ﻿using System;
+using My.Dotnet.Logger.TableStorage.Extensions.Struct;
 using Serilog.Events;
 using Serilog.Sinks.AzureTableStorage.KeyGenerator;
 
@@ -15,12 +16,12 @@ namespace My.Dotnet.Logger.KeyGenerator
 
         public virtual string GeneratePartitionKey(LogEvent logEvent)
         {
-            return DateTime.Now.ToString("yyyy-MM-dd");
+            return DateTime.Now.ToDateString();
         }
 
         public virtual string GenerateRowKey(LogEvent logEvent, string suffix = null)
         {
-            return DateTime.Now.ToString("HH:mm:ss.ffff");
+            return DateTime.Now.ToTimeString();
         }
     }
 }

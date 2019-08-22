@@ -1,0 +1,19 @@
+﻿using My.Dotnet.Logger.TableStorage.Dto;
+using My.Dotnet.Logger.TableStorage.Dto.Response;
+using My.Dotnet.Logger.TableStorage.Entities;
+
+namespace My.Dotnet.Logger.TableStorage.Mapper
+{
+    public static class SegmentedResultMapper
+    {
+        public static LogResponse MapToLogResponse(this SegmentedResult<LogEntity> segment)
+        {
+            return new LogResponse()
+            {
+                Results = segment.Results,
+                HasRows = segment.ContinuationToken != default,
+                ContinuationToken = segment.ContinuationToken 
+            };
+        }
+    }
+}
