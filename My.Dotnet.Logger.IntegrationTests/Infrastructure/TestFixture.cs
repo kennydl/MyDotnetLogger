@@ -29,8 +29,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Infrastructure
                     loggingBuilder.AddSerilog();
                 });
 
-            _storageAccount  = _serviceCollection.AddStorageAccount(_connectionString);
-            _serviceCollection.AddServiceTableStorageLogger();
+            _serviceCollection.AddTableStorageLogRepository(_connectionString);
             ServiceProvider = _serviceCollection.BuildServiceProvider();
 
             ConfigureLogger();

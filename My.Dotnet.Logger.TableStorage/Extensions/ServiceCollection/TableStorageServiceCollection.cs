@@ -10,19 +10,14 @@ namespace My.Dotnet.Logger.TableStorage.Extensions.ServiceCollection
 {
     public static class TableStorageServiceCollection
     {
-        public static CloudStorageAccount AddStorageAccount(this IServiceCollection services, string connectionString)
-        {           
-            var storageAccount = AzureStorageUtil.GetStorageAccount(connectionString);
-            services.AddSingleton(storageAccount);
-            return storageAccount;
-        }
-
-        public static IServiceCollection AddTableStorageLogRepository(this IServiceCollection services)
+        public static IServiceCollection AddTableStorageLogRepository(this IServiceCollection services, string connectionString)
         {
-            services.AddScoped<ILogRepository, LogRepository>();
-            services.AddScoped<ILogServiceContext, LogServiceContext>();
-            services.AddSingleton<ILogRepositoryFactory, LogRepositoryFactory>();
-            services.AddScoped(provider => provider.GetService<ILogRepositoryFactory>().CreateRepository());
+            var storageAccount = AzureStorageUtil.GetStorageAccount(connectionString);
+            services.AddSingleton(storageAccount)
+                .AddScoped<ILogRepository, LogRepository>()
+                .AddScoped<ILogServiceContext, LogServiceContext>()
+                .AddSingleton<ILogRepositoryFactory, LogRepositoryFactory>()
+                .AddScoped(provider => provider.GetService<ILogRepositoryFactory>().CreateRepository());
             return services;
         }
     }
