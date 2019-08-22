@@ -28,8 +28,9 @@ steps:
 
 - task: FileTransform@1
   inputs:
-    folderPath: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    folderPath: 
     fileType: 'json'
+    targetFiles: '**/*.json'
     
 - task: DotNetCoreCLI@2
   displayName: 'Restore NuGet'
