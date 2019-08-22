@@ -26,6 +26,11 @@ steps:
   inputs:
     version: '2.2.401'
 
+- task: FileTransform@1
+  inputs:
+    folderPath: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    fileType: 'json'
+    
 - task: DotNetCoreCLI@2
   displayName: 'Restore NuGet'
   inputs:
@@ -36,11 +41,6 @@ steps:
   displayName: 'Build solution'
   inputs:
     command: 'build'
-
-- task: FileTransform@1
-  inputs:
-    folderPath: '$(Build.ArtifactStagingDirectory)/*.zip'
-    fileType: 'json'
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Tests'
