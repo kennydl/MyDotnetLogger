@@ -17,7 +17,7 @@ namespace My.Dotnet.Logger.TableStorage.Extensions.ServiceCollection
             return storageAccount;
         }
 
-        public static IServiceCollection AddServiceTableStorageLogger(this IServiceCollection services)
+        public static IServiceCollection AddTableStorageLogRepository(this IServiceCollection services)
         {
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<ILogServiceContext, LogServiceContext>();

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>My Dotnet Logger Data</Description>
   </PropertyGroup>
 
 </Project>
