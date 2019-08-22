@@ -57,14 +57,14 @@ steps:
     versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Pack My.Dotnet.Logger'
+  displayName: 'Pack My.Dotnet.Logger.Data'
   inputs:
     command: 'pack'
     packagesToPack: '**/My.Dotnet.Logger.Data/*.csproj'
     versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Pack My.Dotnet.Logger'
+  displayName: 'Pack My.Dotnet.Logger.TableStorage'
   inputs:
     command: 'pack'
     packagesToPack: '**/My.Dotnet.Logger.TableStorage/*.csproj'
