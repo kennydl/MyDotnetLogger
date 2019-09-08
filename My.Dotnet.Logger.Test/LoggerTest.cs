@@ -1,12 +1,9 @@
-using Microsoft.Extensions.Configuration;
 using My.Dotnet.Logger.Extensions;
 using My.Dotnet.Logger.SeriLogConfig;
-using My.Dotnet.Logger.TableStorage.Utilities;
 using NUnit.Framework;
 using Serilog;
-using System.IO;
 
-namespace My.Dotnet.Logger.Test
+namespace My.Dotnet.Logger.Tests
 {
     public class LoggerTest
     {

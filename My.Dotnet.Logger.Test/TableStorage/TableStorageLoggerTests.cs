@@ -6,13 +6,10 @@ using My.Dotnet.Logger.SeriLogConfig;
 using My.Dotnet.Logger.TableStorage.Utilities;
 using NUnit.Framework;
 using Serilog;
-using System;
 using System.IO;
 using System.Threading.Tasks;
-using My.Dotnet.Logger.TableStorage.Extensions.Struct;
-using My.Dotnet.Logger.TableStorage.Entities;
 
-namespace My.Dotnet.Logger.Test.TableStorage
+namespace My.Dotnet.Logger.Tests.TableStorage
 {
     public class TableStorageLoggerTests
     {

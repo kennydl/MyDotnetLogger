@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <RootNamespace>My.Dotnet.Logger.Tests</RootNamespace>
+
+    <AssemblyName>My.Dotnet.Logger.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

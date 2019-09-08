@@ -2,7 +2,7 @@
 
 namespace My.Dotnet.Logger.TableStorage.Extensions.Struct
 {
-    public static class DateTimeExtensions
+    internal static class DateTimeExtensions
     {
         public static string ToDateString(this DateTime date)
         {
