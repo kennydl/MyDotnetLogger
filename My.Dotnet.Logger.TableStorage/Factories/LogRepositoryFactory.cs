@@ -1,11 +1,8 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
-using My.Dotnet.Logger.Data.Context;
+using My.Dotnet.Logger.TableStorage.Context;
 using My.Dotnet.Logger.TableStorage.Interfaces.Repositories;
 using My.Dotnet.Logger.TableStorage.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace My.Dotnet.Logger.TableStorage.Factories
 {

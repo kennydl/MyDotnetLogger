@@ -1,6 +1,5 @@
-﻿using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Extensions.DependencyInjection;
-using My.Dotnet.Logger.Data.Context;
+﻿using Microsoft.Extensions.DependencyInjection;
+using My.Dotnet.Logger.TableStorage.Context;
 using My.Dotnet.Logger.TableStorage.Factories;
 using My.Dotnet.Logger.TableStorage.Interfaces.Repositories;
 using My.Dotnet.Logger.TableStorage.Repositories;

@@ -1,21 +1,18 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using My.Dotnet.Logger.Extensions;
+using My.Dotnet.Logger.SeriLogConfig;
 using My.Dotnet.Logger.TableStorage.Extensions.ServiceCollection;
 using Serilog;
-using My.Dotnet.Logger.Extensions;
 using Serilog.Events;
-using My.Dotnet.Logger.SeriLogConfig;
-using My.Dotnet.Logger.TableStorage.Utilities;
-using System.Diagnostics;
 
 namespace My.Dotnet.Logger.IntegrationTests.Infrastructure
 {
     public class TestFixture
     {
         public readonly string TableName = "IntegrationTestLog";
-        private readonly string _connectionString;
-        private CloudStorageAccount _storageAccount;
+        private readonly string _connectionString;        
         private readonly IServiceCollection _serviceCollection;
         public readonly ServiceProvider ServiceProvider;
 
@@ -38,7 +35,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Infrastructure
 
         public void DropCloudTable()
         {
-            var client = _storageAccount.CreateCloudTableClient();
+            var client = ServiceProvider.GetService<CloudStorageAccount>().CreateCloudTableClient();
             var table = client.GetTableReference(TableName);
             table.Delete();
         }

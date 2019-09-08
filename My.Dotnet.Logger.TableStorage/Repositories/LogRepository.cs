@@ -2,7 +2,6 @@
 
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
-using My.Dotnet.Logger.TableStorage.Dto;
 using My.Dotnet.Logger.TableStorage.Dto.Response;
 using My.Dotnet.Logger.TableStorage.Entities;
 using My.Dotnet.Logger.TableStorage.Factories;
@@ -10,12 +9,12 @@ using My.Dotnet.Logger.TableStorage.Interfaces.Repositories;
 using My.Dotnet.Logger.TableStorage.Mapper;
 using My.Dotnet.Logger.TableStorage.Models;
 using My.Dotnet.Logger.TableStorage.Queries;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace My.Dotnet.Logger.TableStorage.Repositories
 {
-    public class LogRepository : TableStorageQuery, ILogRepository
+    public class LogRepository : TableStorageLogQuery, ILogRepository
     {
         private readonly CloudTableClient _tableClient;
         private readonly CloudTable _table;
@@ -28,7 +27,7 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
 
         public LogResponse GetAll(LogFilterRequest request)
         {
-            return new SegmentedResult<LogEntity>()
+            return new SegmentedResultEntity<LogEntity>()
             {
                 Results = _table.ExecuteQuery(CreateTableQuery(request))
             }.MapToLogResponse();
@@ -41,12 +40,17 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
                 continuationToken
             ).ConfigureAwait(false);
 
-            var segmentResult = new SegmentedResult<LogEntity>()
+            var segmentResult = await FilterRenderedMessage(new SegmentedResultEntity<LogEntity>()
             {
                 Results = queryResponse.Results,
                 ContinuationToken = queryResponse.ContinuationToken
-            };
+            }, request);
 
+            return segmentResult.MapToLogResponse();          
+        }
+
+        private async Task<SegmentedResultEntity<LogEntity>> FilterRenderedMessage(SegmentedResultEntity<LogEntity> segmentResult, LogFilterRequest request)
+        {
             if (!string.IsNullOrEmpty(request.RenderedMessage))
             {
                 segmentResult.Results = segmentResult.Results.Where(
@@ -55,14 +59,14 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
 
                 while (segmentResult.Results.Count() < request.Take && segmentResult.ContinuationToken != default)
                 {
-                    request.Take = request.Take - segmentResult.Results.Count();                    
+                    request.Take = request.Take - segmentResult.Results.Count();
                     var response = await GetSegmentedFilterAsync(request, segmentResult.ContinuationToken);
                     segmentResult.ContinuationToken = response.ContinuationToken;
                     segmentResult.Results = segmentResult.Results.Concat(response.Results);
                 }
             }
 
-            return segmentResult.MapToLogResponse();          
+            return segmentResult;
         }
 
         private TableQuery<LogEntity> CreateTableQuery(LogFilterRequest request)
@@ -83,6 +87,6 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
             }
 
             return new TableQuery<LogEntity>();
-        }         
+        }
     }
 }

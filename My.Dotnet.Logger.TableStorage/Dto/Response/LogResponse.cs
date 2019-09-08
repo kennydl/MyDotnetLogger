@@ -1,8 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using My.Dotnet.Logger.TableStorage.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace My.Dotnet.Logger.TableStorage.Dto.Response
 {

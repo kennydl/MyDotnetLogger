@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using My.Dotnet.Logger.Data.Context;
+using My.Dotnet.Logger.TableStorage.Context;
 using My.Dotnet.Logger.TableStorage.Extensions.Struct;
 using My.Dotnet.Logger.TableStorage.Factories;
 using My.Dotnet.Logger.TableStorage.Interfaces.Repositories;
@@ -24,17 +24,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             _serviceContext = (LogServiceContext)SetupFixture.Fixture.ServiceProvider.GetService<ILogServiceContext>();
             _serviceContext.TableName = SetupFixture.Fixture.TableName;
             _repository = SetupFixture.Fixture.ServiceProvider.GetService<ILogRepositoryFactory>().CreateRepository();
-        }
-
-        [Test]
-        public void Get_all_logs_no_filter()
-        {       
-            // Act
-            var response = _repository.GetAll(new LogFilterRequest());
-
-            // Assert
-            Assert.AreEqual(_maxNrOfLogs, response.Results.Count());
-        }
+        }        
 
         [TestCase(LogLevel.Information, 1)]
         [TestCase(LogLevel.Warning, 2)]
@@ -52,7 +42,33 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             // Assert            
             Assert.AreEqual(assertNrOfLogs, response.Results.Count());
         }
-      
+
+        [TestCase(LogLevel.Information, 1)]
+        [TestCase(LogLevel.Warning, 2)]
+        [TestCase(LogLevel.Error, 2)]
+        [TestCase(LogLevel.None, _maxNrOfLogs)]
+        public async Task Get_segmented_logs_filter_level(LogLevel level, int assertNrOfLogs)
+        {
+            // Arrange
+            var request = new LogFilterRequest() { Level = level };
+
+            // Act
+            var response = await _repository.GetSegmentedFilterAsync(request);
+
+            // Assert
+            Assert.AreEqual(assertNrOfLogs, response.Results.Count());
+        }
+
+        [Test]
+        public void Get_all_logs_no_filter()
+        {
+            // Act
+            var response = _repository.GetAll(new LogFilterRequest());
+
+            // Assert
+            Assert.AreEqual(_maxNrOfLogs, response.Results.Count());
+        }
+
         [Test]
         public async Task Get_segmented_logs_no_filter()
         {
@@ -127,22 +143,6 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             // Assert
             Assert.AreEqual(2, response.Results.Count());
             Assert.True(response.HasRows);
-        }
-
-        [TestCase(LogLevel.Information, 1)]
-        [TestCase(LogLevel.Warning, 2)]
-        [TestCase(LogLevel.Error, 2)]
-        [TestCase(LogLevel.None, _maxNrOfLogs)]
-        public async Task Get_segmented_logs_filter_level(LogLevel level, int assertNrOfLogs)
-        {
-            // Arrange
-            var request = new LogFilterRequest() { Level = level };
-
-            // Act
-            var response = await _repository.GetSegmentedFilterAsync(request);
-
-            // Assert
-            Assert.AreEqual(assertNrOfLogs, response.Results.Count());
-        }
+        }     
     }
 }

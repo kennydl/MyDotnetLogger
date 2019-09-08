@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using My.Dotnet.Logger.TableStorage.Dto.Response;
-using My.Dotnet.Logger.TableStorage.Entities;
 using My.Dotnet.Logger.TableStorage.Models;
 using System.Threading.Tasks;
 

@@ -1,13 +1,11 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace My.Dotnet.Logger.TableStorage.Queries
 {
-    public abstract class TableStorageQuery
+    public abstract class TableStorageLogQuery
     {
         public string CombineAllQueries(string[] filters, string operatorString, bool addParantheses = true)
         {

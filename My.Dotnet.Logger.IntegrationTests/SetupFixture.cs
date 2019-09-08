@@ -35,5 +35,4 @@ namespace My.Dotnet.Logger.IntegrationTests
             Fixture.DropCloudTable();
         }
     }
-
 }

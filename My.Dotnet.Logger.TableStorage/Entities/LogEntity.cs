@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json.Linq;
-using System;
 
 namespace My.Dotnet.Logger.TableStorage.Entities
 {
