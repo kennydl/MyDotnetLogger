@@ -2,7 +2,7 @@
 {
     public interface ILogServiceContext
     {
-        string TableName { get; } 
+        string TableName { get; set; } 
     }
 
     public class LogServiceContext : ILogServiceContext

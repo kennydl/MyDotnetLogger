@@ -14,14 +14,14 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
 {
     public class LogRepositoryTests
     {
-        private LogServiceContext _serviceContext;
+        private ILogServiceContext _serviceContext;
         private ILogRepository _repository;
         private const int _maxNrOfLogs = 5;
 
         [SetUp]
         public void Setup()
         {
-            _serviceContext = (LogServiceContext)SetupFixture.Fixture.ServiceProvider.GetService<ILogServiceContext>();
+            _serviceContext = SetupFixture.Fixture.ServiceProvider.GetService<ILogServiceContext>();
             _serviceContext.TableName = SetupFixture.Fixture.TableName;
             _repository = SetupFixture.Fixture.ServiceProvider.GetService<ILogRepositoryFactory>().CreateRepository();
         }        
