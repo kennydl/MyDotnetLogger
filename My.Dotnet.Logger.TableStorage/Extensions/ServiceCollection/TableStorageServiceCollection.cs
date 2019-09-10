@@ -15,7 +15,7 @@ namespace My.Dotnet.Logger.TableStorage.Extensions.ServiceCollection
             services.AddSingleton(storageAccount)
                 .AddScoped<ILogRepository, LogRepository>()
                 .AddScoped<ILogServiceContext, LogServiceContext>()
-                .AddScoped<ILogRepositoryFactory, LogRepositoryFactory>()
+                .AddSingleton<ILogRepositoryFactory, LogRepositoryFactory>()
                 .AddScoped(provider => provider.GetService<ILogRepositoryFactory>().CreateRepository());
             return services;
         }
