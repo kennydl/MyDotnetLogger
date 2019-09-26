@@ -33,8 +33,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
         public void Get_all_logs_filter_level(LogLevel level, int assertNrOfLogs)
         {
             // Arrange
-            var request = new LogFilterRequest() { Level = level };
-            
+            var request = new LogFilterRequest() { Level = level };         
 
             // Act
             var response = _repository.GetAll(request);

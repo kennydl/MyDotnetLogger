@@ -44,11 +44,11 @@ namespace My.Dotnet.Logger.IntegrationTests.Infrastructure
         {
             //How To Create a logger with serviceProvider
             var logger = ServiceProvider.GetService<ILoggerFactory>().CreateLogger<TestFixture>();
-            logger.LogInformation("data", new { propertyOne = "dummyOne" }, "Write to storage table dummy 1");
-            logger.LogWarning("data", new { propertyOne = "dummyTwo" }, "Write to storage table dummy 2");
-            logger.LogError("data", new { propertyOne = "dummyThree" }, "Write to storage table dummy 3");
-            logger.LogWarning("data", new { propertyOne = "dummyTwo" }, "Write to storage table dummy 2");
-            logger.LogError("data", new { propertyOne = "dummyThree" }, "Write to storage table dummy 3");
+            logger.LogInformation("data", new { PropertyOne = "dummyOne" }, "Write to storage table dummy 1");
+            logger.LogWarning("data", new { PropertyOne = "dummyTwo" }, "Write to storage table dummy 2");
+            logger.LogError("data", new { PropertyOne = "dummyThree" }, "Write to storage table dummy 3");
+            logger.LogWarning("data", new { PropertyOne = "dummyTwo" }, "Write to storage table dummy 2");
+            logger.LogError("data", new { PropertyOne = "dummyThree" }, "Write to storage table dummy 3");
         }
 
         private void ConfigureLogger()

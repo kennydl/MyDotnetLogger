@@ -1,5 +1,4 @@
-﻿using Microsoft.WindowsAzure.Storage;
-using My.Dotnet.Logger.KeyGenerator;
+﻿using My.Dotnet.Logger.KeyGenerator;
 using My.Dotnet.Logger.TableStorage.Utilities;
 using Serilog;
 
@@ -12,10 +11,9 @@ namespace My.Dotnet.Logger.SeriLogConfig
             log.WriteTo.AzureTableStorage(
                 AzureStorageUtil.GetLoggerStorageAccount(_connectionString),
                 storageTableName: tableName,
-                keyGenerator: new TableStorageKeyGenerator()
+                keyGenerator: new TableStorageKeyGenerator()                
             );
-
             return log;
-        }
+        }     
     }
 }
