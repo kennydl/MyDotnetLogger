@@ -10,8 +10,8 @@ namespace My.Dotnet.Logger.TableStorage.Mapper
             return new LogResponse()
             {
                 Results = segment.Results,
-                HasRows = segment.ContinuationToken != default,
-                ContinuationToken = segment.ContinuationToken 
+                HasRowsLeft = segment.ContinuationToken != default,
+                ContinuationToken = segment.ContinuationToken
             };
         }
     }

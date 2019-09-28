@@ -7,7 +7,7 @@ namespace My.Dotnet.Logger.TableStorage.Dto.Response
     public class LogResponse
     {
         public IEnumerable<LogEntity> Results { get; set; }
-        public bool HasRows { get; set; }
+        public bool HasRowsLeft { get; set; }
         public TableContinuationToken ContinuationToken { get; internal set; }
     }
 }

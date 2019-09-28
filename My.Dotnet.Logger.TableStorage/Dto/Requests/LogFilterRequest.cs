@@ -5,6 +5,7 @@ namespace My.Dotnet.Logger.TableStorage.Models
 {
     public class LogFilterRequest
     {
+        public string TableName { get; set; }
         public string PartitionKeyFrom { get; set; }
         public string PartitionKeyTo { get; set; }
         public string RowKeyFrom { get; set; }

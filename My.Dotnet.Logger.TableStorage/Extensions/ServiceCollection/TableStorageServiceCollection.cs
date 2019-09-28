@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using My.Dotnet.Logger.TableStorage.Context;
-using My.Dotnet.Logger.TableStorage.Factories;
 using My.Dotnet.Logger.TableStorage.Interfaces.Repositories;
 using My.Dotnet.Logger.TableStorage.Repositories;
 using My.Dotnet.Logger.TableStorage.Utilities;
@@ -13,10 +11,7 @@ namespace My.Dotnet.Logger.TableStorage.Extensions.ServiceCollection
         {
             var storageAccount = AzureStorageUtil.GetStorageAccount(connectionString);
             services.AddSingleton(storageAccount)
-                .AddScoped<ILogRepository, LogRepository>()
-                .AddScoped<ILogServiceContext, LogServiceContext>()
-                .AddSingleton<ILogRepositoryFactory, LogRepositoryFactory>()
-                .AddScoped(provider => provider.GetService<ILogRepositoryFactory>().CreateRepository());
+                .AddScoped<ILogRepository, LogRepository>();
             return services;
         }
     }

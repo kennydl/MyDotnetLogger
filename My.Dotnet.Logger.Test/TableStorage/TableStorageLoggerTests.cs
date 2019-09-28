@@ -16,7 +16,7 @@ namespace My.Dotnet.Logger.Tests.TableStorage
         private LoggerConfiguration _loggerConfiguration;
         private CloudStorageAccount _storageAccount;
         private CloudTable _table;
-        public const string TestTableName = "TestLog";
+        private const string _testTableName = "TestLog";
         private string _connectionString;
 
         [OneTimeSetUp]
@@ -29,7 +29,7 @@ namespace My.Dotnet.Logger.Tests.TableStorage
                 _connectionString = configuration.GetConnectionString("AzureTableStorage");
                 _storageAccount = AzureStorageUtil.GetLoggerStorageAccount(_connectionString);
                 var tableClient = _storageAccount.CreateCloudTableClient();
-                _table = tableClient.GetTableReference(TestTableName);
+                _table = tableClient.GetTableReference(_testTableName);
             }                              
         }
 
@@ -50,7 +50,7 @@ namespace My.Dotnet.Logger.Tests.TableStorage
         {                      
             var logger = _loggerConfiguration
                 .Enrich.FromLogContext()
-                .AddAzureTableStorageLogger(_connectionString, TestTableName).CreateLogger();
+                .AddAzureTableStorageLogger(_connectionString, _testTableName).CreateLogger();
 
             logger.AddProperty("PropertyTwo", "dummyTwo")
                 .Information("Write to storage table with template. PropertyOne = {propertyOne}", "dummyOne");

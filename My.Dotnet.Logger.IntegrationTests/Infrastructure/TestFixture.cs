@@ -12,9 +12,19 @@ namespace My.Dotnet.Logger.IntegrationTests.Infrastructure
     public class TestFixture
     {
         public readonly string TableName = "IntegrationTestLog";
-        private readonly string _connectionString;        
+        private readonly string _connectionString;
         private readonly IServiceCollection _serviceCollection;
         public readonly ServiceProvider ServiceProvider;
+        private ILogger<TestFixture> _logger;
+
+        public int NrOfInfoLogs;
+        public int NrOfWarningLogs;
+        public int NrOfErrorLogs;
+        public int NrOfLogs { get
+            {
+                return NrOfInfoLogs + NrOfWarningLogs + NrOfErrorLogs;
+            }
+        }
 
         public TestFixture(string connectionString)
         {
@@ -43,12 +53,30 @@ namespace My.Dotnet.Logger.IntegrationTests.Infrastructure
         private void SeedLogData()
         {
             //How To Create a logger with serviceProvider
-            var logger = ServiceProvider.GetService<ILoggerFactory>().CreateLogger<TestFixture>();
-            logger.LogInformation("data", new { PropertyOne = "dummyOne" }, "Write to storage table dummy 1");
-            logger.LogWarning("data", new { PropertyOne = "dummyTwo" }, "Write to storage table dummy 2");
-            logger.LogError("data", new { PropertyOne = "dummyThree" }, "Write to storage table dummy 3");
-            logger.LogWarning("data", new { PropertyOne = "dummyTwo" }, "Write to storage table dummy 2");
-            logger.LogError("data", new { PropertyOne = "dummyThree" }, "Write to storage table dummy 3");
+            _logger = ServiceProvider.GetService<ILoggerFactory>().CreateLogger<TestFixture>();
+            LogInfo();
+            LogWarning();
+            LogWarning();
+            LogError();
+            LogError();
+        }
+
+        private void LogInfo()
+        {
+            _logger.LogInformation("data", new { PropertyOne = "dummyOne" }, "Write to storage table dummy 1");
+            NrOfInfoLogs += 1;
+        }
+
+        private void LogWarning()
+        {
+            _logger.LogWarning("data", new { PropertyOne = "dummyTwo" }, "Write to storage table dummy 2");
+            NrOfWarningLogs += 1;
+        }
+
+        private void LogError()
+        {
+            _logger.LogError("data", new { PropertyOne = "dummyThree" }, "Write to storage table dummy 3");
+            NrOfErrorLogs += 1;
         }
 
         private void ConfigureLogger()
