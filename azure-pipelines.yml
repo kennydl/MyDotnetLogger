@@ -24,7 +24,8 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: 'Install NuGet tools'
   inputs:
-    version: '2.2.401'
+    version: '2.2.x'
+    # version: '2.2.401'
 
 - task: FileTransform@1
   inputs:
