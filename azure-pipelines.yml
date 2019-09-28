@@ -21,17 +21,19 @@ variables:
   sourceDirectory: $(Build.SourcesDirectory)
 
 steps:
-- task: DotNetCoreInstaller@0
-  displayName: 'Install NuGet tools'
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
   inputs:
-    version: '3.0.100'    
+    packageType: sdk
+    version: 3.0.100
+    installationPath: $(Agent.ToolsDirectory)/dotnet
 
 - task: FileTransform@1
   inputs:
     folderPath: 
     fileType: 'json'
     targetFiles: '**/*.json'
-    
+
 - task: DotNetCoreCLI@2
   displayName: 'Restore NuGet'
   inputs:
