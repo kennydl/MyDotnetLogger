@@ -11,8 +11,7 @@ namespace My.Dotnet.Logger.SeriLogConfig
                 restrictedToMinimumLevel: logLevel,
                 outputTemplate:
                 "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff}] [{Level:u3}] {Message:lj}{NewLine}{Exception}");
-
-            //Log.CloseAndFlush();
+            
             return log;
         }
     }
