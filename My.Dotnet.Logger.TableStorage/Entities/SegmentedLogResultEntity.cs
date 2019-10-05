@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace My.Dotnet.Logger.TableStorage.Entities
 {
-    public class SegmentedResultEntity<T> where T : ITableEntity
+    public class SegmentedLogResultEntity
     {
-        public IEnumerable<T> Results { get; set; }
+        public IEnumerable<LogEntity> Results { get; set; }
         public TableContinuationToken ContinuationToken { get; set; }
     }
 }

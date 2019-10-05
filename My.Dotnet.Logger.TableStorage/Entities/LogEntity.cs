@@ -1,13 +1,14 @@
-﻿using Microsoft.Azure.Cosmos.Table;
-using Newtonsoft.Json.Linq;
+﻿using System;
 
 namespace My.Dotnet.Logger.TableStorage.Entities
 {
-    public class LogEntity : TableEntity
+    public class LogEntity
     {
-        public string MessageTemplate { get; set; }
+        public string PartitionKey { get; set; }
+        public string RowKey { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
         public string Level { get; set; }
         public string RenderedMessage { get; set; }
-        public JObject Data { get; set; }
+        public object Properties { get; set; }
     }
 }

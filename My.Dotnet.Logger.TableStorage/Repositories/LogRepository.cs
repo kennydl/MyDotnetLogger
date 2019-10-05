@@ -29,9 +29,10 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
         public LogResponse GetAll(LogFilterRequest request)
         {
             var table = GetTableReference(request.TableName);
-            return new SegmentedResultEntity<LogEntity>()
+            var results = table.ExecuteQuery(CreateTableQuery(request));
+            return new SegmentedLogResultEntity()
             {
-                Results = table.ExecuteQuery(CreateTableQuery(request))
+                Results = results.Select(r => r.MapToLogEntity())
             }.MapToLogResponse();
         }
 
@@ -44,9 +45,9 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
                 )
                 .ConfigureAwait(false);
 
-            var segmentResult = await FilterRenderedMessage(new SegmentedResultEntity<LogEntity>()
+            var segmentResult = await FilterRenderedMessage(new SegmentedLogResultEntity()
             {
-                Results = queryResponse.Results,
+                Results = queryResponse.Results.Select(r => r.MapToLogEntity()),
                 ContinuationToken = queryResponse.ContinuationToken
             }, request);
             return segmentResult.MapToLogResponse();
@@ -61,7 +62,7 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
             return table;
         }
 
-        private async Task<SegmentedResultEntity<LogEntity>> FilterRenderedMessage(SegmentedResultEntity<LogEntity> segmentResult, LogFilterRequest request)
+        private async Task<SegmentedLogResultEntity> FilterRenderedMessage(SegmentedLogResultEntity segmentResult, LogFilterRequest request)
         {
             if (!string.IsNullOrEmpty(request.RenderedMessage))
             {
@@ -80,7 +81,7 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
             return segmentResult;
         }
 
-        private TableQuery<LogEntity> CreateTableQuery(LogFilterRequest request)
+        private TableQuery<LogTableEntity> CreateTableQuery(LogFilterRequest request)
         {           
             var filters = new string[]
             {
@@ -92,8 +93,8 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
 
             var filterString = CombineAllQueries(filters, TableOperators.And);
             if (!string.IsNullOrEmpty(filterString))
-                return new TableQuery<LogEntity>().Where(filterString);
-            return new TableQuery<LogEntity>();
+                return new TableQuery<LogTableEntity>().Where(filterString);
+            return new TableQuery<LogTableEntity>();
         }
     }
 }
