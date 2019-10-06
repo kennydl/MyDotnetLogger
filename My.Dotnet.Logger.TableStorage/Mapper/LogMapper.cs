@@ -20,7 +20,8 @@ namespace My.Dotnet.Logger.TableStorage.Mapper
         public static LogEntity MapToLogEntity(this LogTableEntity logTableEntity)
         {            
             var data = JsonConvert.DeserializeObject<LogDataTableEntity>(logTableEntity.Data);
-            var properties = JsonConvert.DeserializeObject<LogPropertiesEntity>(data.Properties);
+            var serializedProperties = JsonConvert.SerializeObject(data.Properties);
+            var properties = JsonConvert.DeserializeObject<LogPropertiesEntity>(serializedProperties);
             return new LogEntity()
             {
                 PartitionKey = logTableEntity.PartitionKey,
@@ -33,7 +34,7 @@ namespace My.Dotnet.Logger.TableStorage.Mapper
                 ActionName = properties.ActionName,
                 RequestId = properties.RequestId,
                 RequestPath = properties.RequestPath,
-                Properties = data.Properties,
+                Properties = serializedProperties,
             };
         }
     }

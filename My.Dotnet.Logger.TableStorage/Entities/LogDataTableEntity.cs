@@ -9,6 +9,6 @@ namespace My.Dotnet.Logger.TableStorage.Entities
         DateTimeOffset Timestamp { get; set; }
         public string Level { get; set; }
         public string MessageTemplate { get; set; }
-        public string Properties { get; set; }
+        public object Properties { get; set; }
     }
 }
