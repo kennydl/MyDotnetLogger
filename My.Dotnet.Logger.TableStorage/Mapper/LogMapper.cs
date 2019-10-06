@@ -18,9 +18,9 @@ namespace My.Dotnet.Logger.TableStorage.Mapper
         }
 
         public static LogEntity MapToLogEntity(this LogTableEntity logTableEntity)
-        {
-            //var data = logTableEntity.Data.ToObject<LogDataTableEntity>();
+        {            
             var data = JsonConvert.DeserializeObject<LogDataTableEntity>(logTableEntity.Data);
+            var properties = JsonConvert.DeserializeObject<LogPropertiesEntity>(data.Properties);
             return new LogEntity()
             {
                 PartitionKey = logTableEntity.PartitionKey,
@@ -28,7 +28,12 @@ namespace My.Dotnet.Logger.TableStorage.Mapper
                 Timestamp = logTableEntity.Timestamp,
                 Level = logTableEntity.Level,
                 RenderedMessage = logTableEntity.RenderedMessage,
-                Properties = data.Properties
+                SourceContext = properties.SourceContext,
+                ActionId = properties.ActionId,
+                ActionName = properties.ActionName,
+                RequestId = properties.RequestId,
+                RequestPath = properties.RequestPath,
+                Properties = data.Properties,
             };
         }
     }
