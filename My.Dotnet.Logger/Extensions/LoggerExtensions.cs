@@ -8,7 +8,7 @@ namespace My.Dotnet.Logger.Extensions
     public static class LoggerExtensions
     {
         private static string dataPropertyName = "data";
-        private static string errorPropertyName = "data";
+        private static string errorPropertyName = "error";
 
         public static ILogger<T> AddProperty<T>(this ILogger<T> logger, string name, object property, bool destructureObject = true)
         {
