@@ -30,6 +30,7 @@ namespace My.Dotnet.Logger.TableStorage.Mapper
                 Level = logTableEntity.Level,
                 RenderedMessage = logTableEntity.RenderedMessage,
                 SourceContext = properties.SourceContext,
+                TraceId = properties.TraceId,
                 ActionId = properties.ActionId,
                 ActionName = properties.ActionName,
                 RequestId = properties.RequestId,

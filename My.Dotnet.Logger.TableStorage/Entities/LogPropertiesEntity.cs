@@ -6,6 +6,7 @@ namespace My.Dotnet.Logger.TableStorage.Entities
 {
     public class LogPropertiesEntity
     {
+        public string TraceId { get; set; }
         public string SourceContext { get; set; }
         public string ActionId { get; set; }
         public string ActionName { get; set; }
