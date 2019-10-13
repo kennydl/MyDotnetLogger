@@ -26,31 +26,36 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
             _logger = logger;
         }
 
-        public LogResponse GetAll(LogFilterRequest request)
+        public async Task<LogResponse> GetAllAsync(LogFilterRequest request)
         {
             var table = GetTableReference(request.TableName);
-            var results = table.ExecuteQuery(CreateTableQuery(request));
-            return new SegmentedLogResultEntity()
-            {
-                Results = results.Select(r => r.MapToLogEntity())
-            }.MapToLogResponse();
+            var tableQueries = CreateTableQuery(request);
+            var tableResults = table.ExecuteQuery(tableQueries);
+            var logResult = CreateLogResult(tableResults);
+
+            var filteredResult = await GetFilteredData(logResult, request);
+            return filteredResult.MapToLogResponse();
         }
 
-        public async Task<LogResponse> GetSegmentedFilterAsync(LogFilterRequest request, TableContinuationToken continuationToken = default)
+        public async Task<LogResponse> GetSegmentedResultAsync(LogFilterRequest request, TableContinuationToken token = default)
         {
             var table = GetTableReference(request.TableName);
-            var queryResponse = await table.ExecuteQuerySegmentedAsync(
-                    CreateTableQuery(request).Take(request.Take),
-                    continuationToken
-                )
+            var tableQueries = CreateTableQuery(request).Take(request.Take);
+            var tableResponse = await table.ExecuteQuerySegmentedAsync(tableQueries, token)
                 .ConfigureAwait(false);
+            var logResult = CreateLogResult(tableResponse.Results, tableResponse.ContinuationToken);
 
-            var segmentResult = await FilterRenderedMessage(new SegmentedLogResultEntity()
+            var filteredResult = await GetFilteredData(logResult, request);
+            return filteredResult.MapToLogResponse();
+        }
+
+        private LogResultEntity CreateLogResult(IEnumerable<LogTableEntity> results, TableContinuationToken token = default)
+        {
+            return new LogResultEntity()
             {
-                Results = queryResponse.Results.Select(r => r.MapToLogEntity()),
-                ContinuationToken = queryResponse.ContinuationToken
-            }, request);
-            return segmentResult.MapToLogResponse();
+                Results = results.Select(r => r.MapToLogEntity()),
+                ContinuationToken = token
+            };
         }
 
         private CloudTable GetTableReference(string tableName)
@@ -62,23 +67,38 @@ namespace My.Dotnet.Logger.TableStorage.Repositories
             return table;
         }
 
-        private async Task<SegmentedLogResultEntity> FilterRenderedMessage(SegmentedLogResultEntity segmentResult, LogFilterRequest request)
+        private async Task<LogResultEntity> GetFilteredData(LogResultEntity results, LogFilterRequest request)
         {
-            if (!string.IsNullOrEmpty(request.RenderedMessage))
+            if (!string.IsNullOrEmpty(request.FilterData))
             {
-                segmentResult.Results = segmentResult.Results.Where(
-                    entity => entity.RenderedMessage.Contains(request.RenderedMessage)
-                );
-
-                while (segmentResult.Results.Count() < request.Take && segmentResult.ContinuationToken != default)
+                results.Results = FilterResultProperties(results, request);
+                if (HasContinuationTokenAndResultsNotFilled(results, request))
                 {
-                    request.Take = request.Take - segmentResult.Results.Count();
-                    var response = await GetSegmentedFilterAsync(request, segmentResult.ContinuationToken);
-                    segmentResult.ContinuationToken = response.ContinuationToken;
-                    segmentResult.Results = segmentResult.Results.Concat(response.Results);
+                    results.Results = await ContinueGetSegmentedResult(results, request);
                 }
             }
-            return segmentResult;
+            return results;
+        }
+
+        private IEnumerable<LogEntity> FilterResultProperties(LogResultEntity results, LogFilterRequest request)
+        {
+            return results.Results.Where(entity =>
+                entity.RenderedMessage.Contains(request.FilterData, System.StringComparison.OrdinalIgnoreCase) ||
+                entity.Properties.Contains(request.FilterData, System.StringComparison.OrdinalIgnoreCase )
+            );
+        }
+
+        private bool HasContinuationTokenAndResultsNotFilled(LogResultEntity results, LogFilterRequest request)
+        {
+            return results.ContinuationToken != default && results.Results.Count() < request.Take;
+        }
+
+        private async Task<IEnumerable<LogEntity>> ContinueGetSegmentedResult(LogResultEntity results, LogFilterRequest request)
+        {
+            request.Take = request.Take - results.Results.Count();
+            var response = await GetSegmentedResultAsync(request, results.ContinuationToken);
+            results.ContinuationToken = response.ContinuationToken;
+            return results.Results.Concat(response.Results); 
         }
 
         private TableQuery<LogTableEntity> CreateTableQuery(LogFilterRequest request)

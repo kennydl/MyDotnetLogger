@@ -63,19 +63,19 @@ namespace My.Dotnet.Logger.IntegrationTests.Infrastructure
 
         private void LogInfo()
         {
-            _logger.LogInformation("data", new { PropertyOne = "dummyOne" }, "Write to storage table dummy 1");
+            _logger.LogInformation("data", new { PropertyOne = "propertyOne" }, "Write to storage table dummy 1");
             NrOfInfoLogs += 1;
         }
 
         private void LogWarning()
         {
-            _logger.LogWarning("data", new { PropertyOne = "dummyTwo" }, "Write to storage table dummy 2");
+            _logger.LogWarning("data", new { PropertyTwo = "propertyTwo" }, "Write to storage table dummy 2");
             NrOfWarningLogs += 1;
         }
 
         private void LogError()
         {
-            _logger.LogError("data", new { PropertyOne = "dummyThree" }, "Write to storage table dummy 3");
+            _logger.LogError("data", new { PropertyThree = "propertyThree" }, "Write to storage table dummy 3");
             NrOfErrorLogs += 1;
         }
 

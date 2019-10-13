@@ -7,7 +7,7 @@ namespace My.Dotnet.Logger.TableStorage.Interfaces.Repositories
 {
     public interface ILogRepository
     {
-        LogResponse GetAll(LogFilterRequest filterRequest);
-        Task<LogResponse> GetSegmentedFilterAsync(LogFilterRequest filterRequest, TableContinuationToken continuationToken = null);        
+        Task<LogResponse> GetAllAsync(LogFilterRequest filterRequest);
+        Task<LogResponse> GetSegmentedResultAsync(LogFilterRequest filterRequest, TableContinuationToken continuationToken = null);        
     }
 }

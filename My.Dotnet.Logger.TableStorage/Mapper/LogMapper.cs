@@ -7,7 +7,7 @@ namespace My.Dotnet.Logger.TableStorage.Mapper
 {
     public static class LogMapper
     {
-        public static LogResponse MapToLogResponse(this SegmentedLogResultEntity segment)
+        public static LogResponse MapToLogResponse(this LogResultEntity segment)
         {            
             return new LogResponse()
             {

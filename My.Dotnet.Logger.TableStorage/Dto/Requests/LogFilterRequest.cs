@@ -13,8 +13,7 @@ namespace My.Dotnet.Logger.TableStorage.Models
         public DateTimeOffset TimestampFrom { get; set; }
         public DateTimeOffset TimestampTo { get; set; }
         public LogLevel Level { get; set; } = LogLevel.None;
-        public string RenderedMessage { get; set; }
-        public string Data { get; set; }
+        public string FilterData { get; set; }        
         public int Take { get; set; } = 50;
         public int NrOfPages { get; set; } = 1;
     }

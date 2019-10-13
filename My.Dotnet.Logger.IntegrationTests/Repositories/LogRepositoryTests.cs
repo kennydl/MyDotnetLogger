@@ -23,7 +23,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
         }
 
         [TestCaseSource("GetLogsFilterLevelTestCases")]
-        public void Get_all_logs_filter_level_should_equal_nr_of_all_respective_level_logs(LogLevel level, int assertNrOfLogs)
+        public async Task Get_all_logs_filter_level_should_equal_nr_of_all_respective_level_logs(LogLevel level, int assertNrOfLogs)
         {
             // Arrange
             var request = new MockLogFilterRequest() { 
@@ -31,7 +31,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             };         
 
             // Act
-            var response = _repository.GetAll(request);
+            var response = await _repository.GetAllAsync(request);
 
             // Assert            
             Assert.AreEqual(assertNrOfLogs, response.Results.Count());
@@ -44,7 +44,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             var request = new MockLogFilterRequest() { Level = level };
 
             // Act
-            var response = await _repository.GetSegmentedFilterAsync(request);
+            var response = await _repository.GetSegmentedResultAsync(request);
 
             // Assert
             Assert.AreEqual(assertNrOfLogs, response.Results.Count());
@@ -59,10 +59,10 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
         }
 
         [Test]
-        public void Get_all_logs_no_filter_should_equal_nr_of_all_logs()
+        public async Task Get_all_logs_no_filter_should_equal_nr_of_all_logs()
         {
             // Act
-            var response = _repository.GetAll(new MockLogFilterRequest());
+            var response = await _repository.GetAllAsync(new MockLogFilterRequest());
 
             // Assert
             Assert.AreEqual(SetupFixture.Fixture.NrOfLogs, response.Results.Count());
@@ -73,7 +73,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
         {
             // Act
             var request = new MockLogFilterRequest();
-            var response = await _repository.GetSegmentedFilterAsync(request);
+            var response = await _repository.GetSegmentedResultAsync(request);
 
             // Assert
             Assert.AreEqual(SetupFixture.Fixture.NrOfLogs, response.Results.Count());
@@ -90,7 +90,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             };
 
             // Act
-            var response = await _repository.GetSegmentedFilterAsync(request);
+            var response = await _repository.GetSegmentedResultAsync(request);
 
             // Assert
             Assert.AreEqual(SetupFixture.Fixture.NrOfLogs, response.Results.Count());
@@ -107,7 +107,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             };
 
             // Act
-            var response = await _repository.GetSegmentedFilterAsync(request);
+            var response = await _repository.GetSegmentedResultAsync(request);
 
             // Assert
             Assert.AreEqual(SetupFixture.Fixture.NrOfLogs, response.Results.Count());
@@ -119,14 +119,43 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             // Arrange
             var request = new MockLogFilterRequest()
             {
-                RenderedMessage = "dummy 2"           
+                FilterData = "dummy 2"           
             };
 
             // Act
-            var response = await _repository.GetSegmentedFilterAsync(request);
+            var response = await _repository.GetSegmentedResultAsync(request);
 
             // Assert
             Assert.AreEqual(SetupFixture.Fixture.NrOfWarningLogs, response.Results.Count());            
+        }
+
+        [Test]
+        public async Task Get_segmented_logs_filter_properties_should_equal_nr_of_information_logs()
+        {
+            // Arrange
+            var request = new MockLogFilterRequest()
+            {
+                FilterData = "propertyOne"
+            };
+
+            // Act
+            var response = await _repository.GetSegmentedResultAsync(request);
+
+            // Assert
+            Assert.AreEqual(SetupFixture.Fixture.NrOfInfoLogs, response.Results.Count());
+        }
+
+        [Test]
+        public async Task Get_segmented_logs_filter_properties_ignore_case_should_equal_nr_of_information_logs()
+        {
+            // Arrange
+            var request = new MockLogFilterRequest(){ FilterData = "PROPERTYONE" };
+
+            // Act
+            var response = await _repository.GetSegmentedResultAsync(request);
+
+            // Assert
+            Assert.AreEqual(SetupFixture.Fixture.NrOfInfoLogs, response.Results.Count());
         }
 
         [Test]
@@ -138,7 +167,7 @@ namespace My.Dotnet.Logger.IntegrationTests.Repositories
             };
 
             // Act
-            var response = await _repository.GetSegmentedFilterAsync(request);
+            var response = await _repository.GetSegmentedResultAsync(request);
 
             // Assert
             Assert.AreEqual(2, response.Results.Count());
